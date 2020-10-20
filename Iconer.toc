@@ -1,0 +1,10 @@
+## Interface: 90001
+## Title: Iconer
+## Notes: Set certain raid icons on your Battle.net friends, no matter which character they're playing.
+## Author: peterwooley
+## Version: 1.0.0
+## LoadOnDemand: 0
+## DefaultState: enabled
+
+Iconer.xml
+Iconer.lua
