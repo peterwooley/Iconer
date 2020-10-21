@@ -11,6 +11,12 @@ end
 
 function IconerCommand(msg, editbox)
   local clear = msg == "clear";
+
+  if msg=="options" then
+    InterfaceOptionsFrame_OpenToCategory(Iconer_Options);
+    InterfaceOptionsFrame_OpenToCategory(Iconer_Options);
+  end
+
   r=SetRaidTarget;
   r("player",0);
   if not clear then
@@ -43,16 +49,29 @@ function Iconer:registerOptions()
   options.okay = function (self) print("Options saved.") end;
   options.cancel = Iconer.revertOptions;
 
+  local friendsList = CreateFrame("Frame", nil, Iconer_Options_Friends);
+  friendsList:SetSize(562,900);
+  Iconer_Options_Friends.ScrollBar:ClearAllPoints();
+  Iconer_Options_Friends.ScrollBar:SetPoint("TOPLEFT", Iconer_Options_Friends, "TOPRIGHT", -12, -18) ;
+  Iconer_Options_Friends.ScrollBar:SetPoint("BOTTOMRIGHT", Iconer_Options_Friends, "BOTTOMRIGHT", -7, 18) ;
+  --friendsList.bg = friendsList:CreateTexture(nil, "Background");
+  --friendsList.bg:SetAllPoints(true);
+  --friendsList.bg:SetColorTexture(0.2, 0.6, 0, 0.8);
+  Iconer_Options_Friends:SetScrollChild(friendsList);
+  Iconer_Options_Friends:SetClipsChildren(true);
+
+  local btn = CreateFrame("Frame", nil, Iconer_Options_Friends, "Iconer_FriendTemplate");
+	btn:SetPoint("TOPLEFT", friendsList, "TOPLEFT", 0, 0);
+	btn:SetSize(400, 500);
+	--btn:SetText("Friends!");
+	--btn:SetNormalFontObject("GameFontNormalLarge");
+	--btn:SetHighlightFontObject("GameFontHighlightLarge");
+
+
+
+
   -- Add the panel to the Interface Options
   InterfaceOptions_AddCategory(Iconer_Options);
-
-  ---- Make a child panel
-  --MyAddon.childpanel = CreateFrame( "Frame", "MyAddonChild", MyAddon.panel);
-  --MyAddon.childpanel.name = "MyChild";
-  ---- Specify childness of this panel (this puts it under the little red [+], instead of giving it a normal AddOn category)
-  --MyAddon.childpanel.parent = MyAddon.panel.name;
-  ---- Add the child to the Interface Options
-  --InterfaceOptions_AddCategory(MyAddon.childpanel);
 end
 
 function Iconer:revertOptions()
