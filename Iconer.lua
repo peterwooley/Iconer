@@ -58,17 +58,24 @@ function Iconer:registerOptions()
   --friendsList.bg:SetAllPoints(true);
   --friendsList.bg:SetColorTexture(0.2, 0.6, 0, 0.8);
   Iconer_Options_Friends:SetScrollChild(friendsList);
-  Iconer_Options_Friends:SetClipsChildren(true);
 
-  local btn = CreateFrame("Frame", nil, Iconer_Options_Friends, "Iconer_FriendTemplate");
+  local btn = CreateFrame("Frame", nil, friendsList, "Iconer_FriendTemplate");
 	btn:SetPoint("TOPLEFT", friendsList, "TOPLEFT", 0, 0);
-	btn:SetSize(400, 500);
-	--btn:SetText("Friends!");
+  btn:SetSize(532, 35);
+	btn.battleTag:SetText("You");
+  tex = btn:CreateTexture("BattleTag Texture", "OVERLAY");
+  tex:SetWidth(24);
+  tex:SetHeight(24);
+  tex:SetPoint("CENTER",btn.battleTag,"CENTER",0,0)
+  tex:SetTexture("Interface\\TargetingFrame\\UI-RaidTargetingIcons")
+	SetRaidTargetIconTexture(tex,2)
+  btn.character:SetText(UnitName("player"));
 	--btn:SetNormalFontObject("GameFontNormalLarge");
 	--btn:SetHighlightFontObject("GameFontHighlightLarge");
 
 
 
+  Iconer_Options_Friends:SetClipsChildren(true);
 
   -- Add the panel to the Interface Options
   InterfaceOptions_AddCategory(Iconer_Options);

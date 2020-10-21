@@ -37,15 +37,15 @@
     </Frames>
   </Frame>
 
-  <Frame name="Iconer_FriendTemplate" parent="Iconer_Options" virtual="true">
+  <Frame name="Iconer_FriendTemplate" virtual="true">
     <Layers>
       <Layer>
-        <FontString name="$parent_FriendBattleTag" inherits="GameFontNormalLarge" text="Battle Tag" justifyH="LEFT" justifyV="TOP">
+        <FontString name="$parent_FriendBattleTag" inherits="GameFontNormalLarge" parentKey="battleTag" justifyH="LEFT" justifyV="TOP">
           <Anchors>
             <Anchor point="TOPLEFT" x="16" y="-16" />
           </Anchors>
         </FontString>
-        <FontString name="$parent_FriendCharacter" text="Character Name" inherits="GameFontHighlightSmall" nonspacewrap="true" maxLines="3" justifyH="LEFT" justifyV="TOP">
+        <FontString name="$parent_FriendCharacter" parentKey="character" inherits="GameFontHighlightSmall" nonspacewrap="true" maxLines="3" justifyH="LEFT" justifyV="TOP">
           <Size>
             <AbsDimension y="32" x="0"/>
           </Size>
