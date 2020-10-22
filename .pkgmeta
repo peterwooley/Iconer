@@ -1,0 +1,6 @@
+package-as: Iconer
+ignore:
+    - logo
+    - screenshots
+    - Makefile
+    - README.md
