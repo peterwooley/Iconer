@@ -16,9 +16,10 @@ local db;
 local _, battleTag = BNGetInfo();
 
 function Iconer:setup()
-  Iconer_Options:RegisterEvent("ADDON_LOADED"); -- Fired when saved variables are loaded
+  local frame = CreateFrame("Frame");
+  frame:RegisterEvent("ADDON_LOADED"); -- Fired when saved variables are loaded
 
-  function Iconer_Options:OnEvent(event, arg1)
+  function frame:OnEvent(event, arg1)
     if event == "ADDON_LOADED" and arg1 == "Iconer" then
       if IconerDB == nil or IconerDB.icons == nil then
         IconerDB = {}
@@ -37,7 +38,7 @@ function Iconer:setup()
 
   end
 
-  Iconer_Options:SetScript("OnEvent", Iconer_Options.OnEvent);
+  frame:SetScript("OnEvent", frame.OnEvent);
 end
 
 function IconerCommand(msg, editbox)
