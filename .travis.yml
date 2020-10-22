@@ -1,0 +1,15 @@
+language: minimal
+
+addons:
+  apt:
+    packages:
+      - luarocks
+
+install: luarocks install --local luacheck
+
+script: /home/travis/.luarocks/bin/luacheck . --no-color -q -d
+
+notifications:
+  email:
+    on_failure: always
+    on_success: never
