@@ -28,42 +28,60 @@
       </Layer>
     </Layers>
     <Frames>
-			<ScrollFrame name="$parent_Friends" inherits="UIPanelScrollFrameTemplate">
+      <Frame name="$parent_FriendsBackdrop" inherits="OptionsFrameListTemplate">
 				<Anchors>
 					<Anchor point="TOPLEFT" relativeTo="$parent_HeaderSubText" relativePoint="BOTTOMLEFT" x="0" y="-10"/>
 					<Anchor point="BOTTOMRIGHT" x="-16" y="16"/>
+				</Anchors>
+      </Frame>
+			<ScrollFrame name="$parent_Friends" inherits="UIPanelScrollFrameTemplate">
+				<Anchors>
+					<Anchor point="TOPLEFT" relativeTo="$parent_HeaderSubText" relativePoint="BOTTOMLEFT" x="10" y="-12"/>
+					<Anchor point="BOTTOMRIGHT" x="-18" y="18"/>
 				</Anchors>
 			</ScrollFrame>
     </Frames>
   </Frame>
 
   <Frame name="Iconer_FriendTemplate" virtual="true">
+    <Size>
+      <AbsDimension y="45" x="462"/>
+    </Size>
     <Layers>
       <Layer>
-        <FontString name="$parent_FriendBattleTag" inherits="GameFontNormalLarge" parentKey="battleTag" justifyH="LEFT" justifyV="TOP">
+        <FontString name="$parent_FriendBattleTag" inherits="FriendsFont_Normal" parentKey="battleTag" justifyH="LEFT" justifyV="TOP">
+          <Color r="0.345" g="0.667" b="0.867" />
           <Anchors>
-            <Anchor point="TOPLEFT" x="16" y="-16" />
+            <Anchor point="TOPLEFT" x="0" y="-10" />
           </Anchors>
         </FontString>
-        <FontString name="$parent_FriendCharacter" parentKey="character" inherits="GameFontHighlightSmall" nonspacewrap="true" maxLines="3" justifyH="LEFT" justifyV="TOP">
+        <FontString name="$parent_FriendCharacter" parentKey="character" inherits="FriendsFont_Small" nonspacewrap="true" maxLines="3" justifyH="LEFT" justifyV="TOP">
+          <Color r="0.9" g="0.9" b="0.9" />
           <Size>
             <AbsDimension y="32" x="0"/>
           </Size>
           <Anchors>
-            <Anchor point="TOPLEFT" relativeTo="$parent_FriendBattleTag" relativePoint="BOTTOMLEFT">
+            <Anchor point="TOPLEFT">
               <Offset>
-                <AbsDimension x="0" y="-8"/>
-              </Offset>
-            </Anchor>
-            <Anchor point="RIGHT">
-              <Offset>
-                <AbsDimension x="-32" y="0"/>
+                <AbsDimension x="0" y="-26"/>
               </Offset>
             </Anchor>
           </Anchors>
         </FontString>
       </Layer>
     </Layers>
+    <Frames>
+      <Frame parentKey="dropdown" inherits="UIDropDownMenuTemplate">
+        <Size x="200" y="100"/>
+        <Anchors>
+          <Anchor point="TOPRIGHT">
+            <Offset>
+              <AbsDimension x="0" y="-10"/>
+            </Offset>
+          </Anchor>
+        </Anchors>
+      </Frame>
+    </Frames>
   </Frame>
       <!--<ScrollFrame name="$parent_FriendsContainer">-->
         <!--<Anchors>-->

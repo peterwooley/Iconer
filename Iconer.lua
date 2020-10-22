@@ -1,12 +1,43 @@
 ﻿local _, Iconer = ...
 
-function Iconer:setup()
-  -- Setup Slash Commands
-  SLASH_ICONER1 = '/iconer';
-  SlashCmdList["ICONER"] = IconerCommand;
+local icons = {
+  [0] = "None",
+  [1] = "|cffffff00Star|r",
+  [2] = "|cffff8000Circle|r",
+  [3] = "|cffff00ffDiamond|r",
+  [4] = "|cff7CFC00Triangle|r",
+  [5] = "|cffc7c7cfMoon|r",
+  [6] = "|cff00BFFFSquare|r",
+  [7] = "|cffFF4500Cross|r",
+  [8] = "|cffffffffSkull|r",
+}
 
-  -- Setup Options UI
-  Iconer:registerOptions();
+local db;
+local _, battleTag = BNGetInfo();
+
+function Iconer:setup()
+  Iconer_Options:RegisterEvent("ADDON_LOADED"); -- Fired when saved variables are loaded
+
+  function Iconer_Options:OnEvent(event, arg1)
+    if event == "ADDON_LOADED" and arg1 == "Iconer" then
+      if IconerDB == nil or IconerDB.icons == nil then
+        IconerDB = {}
+        IconerDB.icons = {}
+      end
+      db = IconerDB.icons;
+      
+      -- Setup Slash Commands
+      SLASH_ICONER1 = '/iconer';
+      SlashCmdList["ICONER"] = IconerCommand;
+
+
+      -- Setup Options UI
+      Iconer:registerOptions();
+    end
+
+  end
+
+  Iconer_Options:SetScript("OnEvent", Iconer_Options.OnEvent);
 end
 
 function IconerCommand(msg, editbox)
@@ -17,17 +48,21 @@ function IconerCommand(msg, editbox)
     InterfaceOptionsFrame_OpenToCategory(Iconer_Options);
   end
 
+  --if math.random() < 0.1 then
+    --print("I like poop!");
+  --end
+
   r=SetRaidTarget;
-  r("player",0);
-  if not clear then
-    r("player",2);
+
+  local icon = db[battleTag];
+  if icon then
+    r("player",0);
+    if not clear then
+      r("player",icon);
+    end
   end
-  ma={
-    ["karawooley#1384"]=1,
-    ["Daemodreth#1663"]=6,
-    ["Andaline#1307"]=3,
-    ["RunningUtes#1401"]=4
-  };
+
+  ma=db
 
   for i=1, BNGetNumFriends() do
     a=C_BattleNet.GetFriendAccountInfo(i);
@@ -54,31 +89,89 @@ function Iconer:registerOptions()
   Iconer_Options_Friends.ScrollBar:ClearAllPoints();
   Iconer_Options_Friends.ScrollBar:SetPoint("TOPLEFT", Iconer_Options_Friends, "TOPRIGHT", -12, -18) ;
   Iconer_Options_Friends.ScrollBar:SetPoint("BOTTOMRIGHT", Iconer_Options_Friends, "BOTTOMRIGHT", -7, 18) ;
-  --friendsList.bg = friendsList:CreateTexture(nil, "Background");
-  --friendsList.bg:SetAllPoints(true);
-  --friendsList.bg:SetColorTexture(0.2, 0.6, 0, 0.8);
   Iconer_Options_Friends:SetScrollChild(friendsList);
 
-  local btn = CreateFrame("Frame", nil, friendsList, "Iconer_FriendTemplate");
-	btn:SetPoint("TOPLEFT", friendsList, "TOPLEFT", 0, 0);
-  btn:SetSize(532, 35);
-	btn.battleTag:SetText("You");
-  tex = btn:CreateTexture("BattleTag Texture", "OVERLAY");
-  tex:SetWidth(24);
-  tex:SetHeight(24);
-  tex:SetPoint("CENTER",btn.battleTag,"CENTER",0,0)
-  tex:SetTexture("Interface\\TargetingFrame\\UI-RaidTargetingIcons")
-	SetRaidTargetIconTexture(tex,2)
-  btn.character:SetText(UnitName("player"));
-	--btn:SetNormalFontObject("GameFontNormalLarge");
-	--btn:SetHighlightFontObject("GameFontHighlightLarge");
-
+  Iconer:createFriendsList(friendsList)
 
 
   Iconer_Options_Friends:SetClipsChildren(true);
 
   -- Add the panel to the Interface Options
   InterfaceOptions_AddCategory(Iconer_Options);
+end
+
+function Iconer:createFriendsList(friendsList)
+  local friends, nf, friend = {}, {};
+
+  -- Add self
+  friends[1] = C_BattleNet.GetAccountInfoByID(select(3, BNGetInfo()));
+  
+  -- Add favorites and store non-favorites
+  for i=1, BNGetNumFriends() do
+    friend=C_BattleNet.GetFriendAccountInfo(i);
+    if friend.isFavorite then
+      friends[#friends+1] = friend;
+    else
+      nf[#nf+1] = friend;
+    end
+  end
+
+  -- Add non-favorites to end of table
+  for i=1,#nf do
+    friends[#friends+1] = nf[i]
+  end
+
+
+  -- Create list of friends
+  for i=1, #friends do
+    a=friends[i]
+    b=a.battleTag;
+    c=a.gameAccountInfo.characterName;
+
+    local btn = CreateFrame("Frame", nil, friendsList, "Iconer_FriendTemplate");
+    --btn:SetSize(532, 35);
+    btn:SetPoint("TOPLEFT", 0, -(i-1)*45) ;
+
+    if b == battleTag then
+      btn.battleTag:SetText("You");
+      btn.character:SetText(UnitName("player"));
+    else
+      btn.battleTag:SetText(b);
+      btn.character:SetText(c and c or "Not playing" );
+      if c == nil then btn.character:SetTextColor(.486,.518,.541) end
+    end
+
+    btn.dropDown = btn.dropdown;
+    btn.dropDown.battleTag = b;
+
+    UIDropDownMenu_SetWidth(btn.dropDown, 100)
+    UIDropDownMenu_SetText(btn.dropDown, db[b] and icons[db[b]] or icons[0])
+
+    -- Create and bind the initialization function to the dropdown menu
+    UIDropDownMenu_Initialize(btn.dropDown, function(self, level, menuList)
+      local info = UIDropDownMenu_CreateInfo()
+      local battleTag = self.battleTag;
+      
+      for i=0,#icons do
+        info.text, info.arg1, info.checked = icons[i], i, i == db[battleTag]
+        info.menuList = i
+        info.func = function(self, newValue)
+          -- Update the dropdown text to the new selection
+          UIDropDownMenu_SetText(btn.dropDown, icons[newValue])
+          self.checked = true;
+
+          -- Save the new selection to the db
+          if newValue == 0 then
+            db[battleTag] = nil;
+          else
+            db[battleTag] = newValue;
+          end
+        end
+
+        UIDropDownMenu_AddButton(info)
+      end
+    end)
+  end
 end
 
 function Iconer:revertOptions()

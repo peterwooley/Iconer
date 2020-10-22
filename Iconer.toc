@@ -5,6 +5,7 @@
 ## Version: 1.0.0
 ## LoadOnDemand: 0
 ## DefaultState: enabled
+## SavedVariables: IconerDB
 
 Iconer.xml
 Iconer.lua
