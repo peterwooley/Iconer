@@ -36,8 +36,8 @@
       </Frame>
 			<ScrollFrame name="$parent_Friends" inherits="UIPanelScrollFrameTemplate">
 				<Anchors>
-					<Anchor point="TOPLEFT" relativeTo="$parent_HeaderSubText" relativePoint="BOTTOMLEFT" x="10" y="-12"/>
-					<Anchor point="BOTTOMRIGHT" x="-18" y="18"/>
+					<Anchor point="TOPLEFT" relativeTo="$parent_HeaderSubText" relativePoint="BOTTOMLEFT" x="10" y="-13"/>
+					<Anchor point="BOTTOMRIGHT" x="-19" y="20"/>
 				</Anchors>
 			</ScrollFrame>
     </Frames>
@@ -45,7 +45,7 @@
 
   <Frame name="Iconer_FriendTemplate" virtual="true">
     <Size>
-      <AbsDimension y="45" x="462"/>
+      <AbsDimension y="45" x="350"/>
     </Size>
     <Layers>
       <Layer>

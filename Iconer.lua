@@ -82,14 +82,13 @@ end
 function Iconer:registerOptions()
   local options = Iconer_Options;
   options.name = "Iconer";
-  options.okay = function (self) print("Options saved.") end;
-  options.cancel = Iconer.revertOptions;
+  --options.cancel = Iconer.revertOptions;
 
   local friendsList = CreateFrame("Frame", nil, Iconer_Options_Friends);
-  friendsList:SetSize(562,900);
+  friendsList:SetSize(562,45);
   Iconer_Options_Friends.ScrollBar:ClearAllPoints();
   Iconer_Options_Friends.ScrollBar:SetPoint("TOPLEFT", Iconer_Options_Friends, "TOPRIGHT", -12, -18) ;
-  Iconer_Options_Friends.ScrollBar:SetPoint("BOTTOMRIGHT", Iconer_Options_Friends, "BOTTOMRIGHT", -7, 18) ;
+  Iconer_Options_Friends.ScrollBar:SetPoint("BOTTOMRIGHT", Iconer_Options_Friends, "BOTTOMRIGHT", -8, 17) ;
   Iconer_Options_Friends:SetScrollChild(friendsList);
 
   Iconer:createFriendsList(friendsList)
