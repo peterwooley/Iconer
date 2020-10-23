@@ -137,6 +137,7 @@ function Iconer:createFriendsList(friendsList)
       btn.character:SetText(UnitName("player"));
     else
       btn.battleTag:SetText(b);
+      --btn.battleTag:SetText("FriendBattleTag#" .. math.ceil(math.random()*9999));
       btn.character:SetText(c and c or "Not playing" );
       if c == nil then btn.character:SetTextColor(.486,.518,.541) end
     end
