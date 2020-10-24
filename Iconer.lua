@@ -49,10 +49,6 @@ function IconerCommand(msg, editbox)
     InterfaceOptionsFrame_OpenToCategory(Iconer_Options);
   end
 
-  --if math.random() < 0.1 then
-    --print("I like poop!");
-  --end
-
   r=SetRaidTarget;
 
   local icon = db[battleTag];
@@ -82,7 +78,6 @@ end
 function Iconer:registerOptions()
   local options = Iconer_Options;
   options.name = "Iconer";
-  --options.cancel = Iconer.revertOptions;
 
   local friendsList = CreateFrame("Frame", nil, Iconer_Options_Friends);
   friendsList:SetSize(562,45);
@@ -129,7 +124,6 @@ function Iconer:createFriendsList(friendsList)
     c=a.gameAccountInfo.characterName;
 
     local btn = CreateFrame("Frame", nil, friendsList, "Iconer_FriendTemplate");
-    --btn:SetSize(532, 35);
     btn:SetPoint("TOPLEFT", 0, -(i-1)*45) ;
 
     if b == battleTag then
@@ -173,10 +167,6 @@ function Iconer:createFriendsList(friendsList)
       end
     end)
   end
-end
-
-function Iconer:revertOptions()
-  print("Reverting Iconer options.")
 end
 
 Iconer:setup();
