@@ -28,7 +28,11 @@
       </Layer>
     </Layers>
     <Frames>
-      <Frame name="$parent_FriendsBackdrop" inherits="OptionsFrameListTemplate">
+      <Frame name="$parent_FriendsBackdrop" inherits="TooltipBorderBackdropTemplate">
+        <KeyValues>
+          <KeyValue key="backdropBorderColor" value="LIGHTGRAY_FONT_COLOR" type="global"/>
+          <KeyValue key="backdropBorderColorAlpha" value="0.6" type="number"/>
+        </KeyValues>
 				<Anchors>
 					<Anchor point="TOPLEFT" relativeTo="$parent_HeaderSubText" relativePoint="BOTTOMLEFT" x="0" y="-10"/>
 					<Anchor point="BOTTOMRIGHT" x="-16" y="16"/>
