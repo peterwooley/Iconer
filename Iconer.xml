@@ -35,21 +35,30 @@
         </KeyValues>
 				<Anchors>
 					<Anchor point="TOPLEFT" relativeTo="$parent_HeaderSubText" relativePoint="BOTTOMLEFT" x="0" y="-10"/>
-					<Anchor point="BOTTOMRIGHT" x="-16" y="16"/>
+					<Anchor point="BOTTOMRIGHT" x="-260" y="16"/>
 				</Anchors>
       </Frame>
 			<ScrollFrame name="$parent_Friends" inherits="UIPanelScrollFrameTemplate">
 				<Anchors>
 					<Anchor point="TOPLEFT" relativeTo="$parent_HeaderSubText" relativePoint="BOTTOMLEFT" x="10" y="-13"/>
-					<Anchor point="BOTTOMRIGHT" x="-19" y="20"/>
+					<Anchor point="BOTTOMRIGHT" x="-260" y="20"/>
 				</Anchors>
 			</ScrollFrame>
+
+      <CheckButton name="$parent_Auto" inherits="OptionsCheckButtonTemplate" checked="true">
+				<Anchors>
+					<Anchor point="TOPLEFT" relativeTo="$parent_FriendsBackdrop" relativePoint="TOPRIGHT" x="16" y="0"/>
+        </Anchors>
+        <Scripts>
+          <OnLoad>getglobal(self:GetName().."Text"):SetText("Apply icons when party changes")</OnLoad>
+        </Scripts>
+      </CheckButton>
     </Frames>
   </Frame>
 
   <Frame name="Iconer_FriendTemplate" virtual="true">
     <Size>
-      <AbsDimension y="45" x="350"/>
+      <AbsDimension y="45" x="320"/>
     </Size>
     <Layers>
       <Layer>

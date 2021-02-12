@@ -12,20 +12,32 @@ local icons = {
   [8] = "|cffffffffSkull|r",
 }
 
-local db;
+local db, auto;
+local timeTillNext = 0;
 local _, battleTag = BNGetInfo();
 
 function Iconer:setup()
   local frame = CreateFrame("Frame");
   frame:RegisterEvent("ADDON_LOADED"); -- Fired when saved variables are loaded
+  frame:RegisterEvent("GROUP_ROSTER_UPDATE"); -- Fired when saved variables are loaded
 
   function frame:OnEvent(event, arg1)
     if event == "ADDON_LOADED" and arg1 == "Iconer" then
-      if IconerDB == nil or IconerDB.icons == nil then
+      if IconerDB == nil then
         IconerDB = {}
+      end
+      
+      if IconerDB.icons == nil then
         IconerDB.icons = {}
       end
       db = IconerDB.icons;
+
+      if IconerDB.auto == nil then
+        IconerDB.auto = {
+          group = false
+        }
+      end
+      auto = IconerDB.auto;
       
       -- Setup Slash Commands
       SLASH_ICONER1 = '/iconer';
@@ -34,6 +46,17 @@ function Iconer:setup()
 
       -- Setup Options UI
       Iconer:registerOptions();
+    elseif event == "GROUP_ROSTER_UPDATE" then
+      -- Check if auto-icon is enabled
+      if not auto.group then
+        --print("Auto-icon is not enabled. Skipping.")
+        return;
+      end
+
+      if GetNumSubgroupMembers() > 0 then
+        --print("Group has members, so Iconer is being run.")
+        IconerCommand()
+      end
     end
 
   end
@@ -47,6 +70,16 @@ function IconerCommand(msg, editbox)
   if msg=="options" then
     InterfaceOptionsFrame_OpenToCategory(Iconer_Options);
     InterfaceOptionsFrame_OpenToCategory(Iconer_Options);
+    return
+  end
+
+  -- Check if enough time has past to apply
+  if timeTillNext < GetTime() then
+    --print("Enough time has past, running Iconer.")
+    timeTillNext = GetTime()+1
+  else
+    --print("Not enough time has past, skipping Iconer.")
+    return;
   end
 
   r=SetRaidTarget;
@@ -79,17 +112,24 @@ function Iconer:registerOptions()
   local options = Iconer_Options;
   options.name = "Iconer";
 
+  -- Setup Friends List
   local friendsList = CreateFrame("Frame", nil, Iconer_Options_Friends);
-  friendsList:SetSize(562,45);
+  friendsList:SetSize(1,1);
   Iconer_Options_Friends.ScrollBar:ClearAllPoints();
-  Iconer_Options_Friends.ScrollBar:SetPoint("TOPLEFT", Iconer_Options_Friends, "TOPRIGHT", -12, -18) ;
-  Iconer_Options_Friends.ScrollBar:SetPoint("BOTTOMRIGHT", Iconer_Options_Friends, "BOTTOMRIGHT", -8, 17) ;
+  Iconer_Options_Friends.ScrollBar:SetPoint("TOPLEFT", Iconer_Options_FriendsBackdrop, "TOPRIGHT", -14, -20) ;
+  Iconer_Options_Friends.ScrollBar:SetPoint("BOTTOMRIGHT", Iconer_Options_FriendsBackdrop, "BOTTOMRIGHT", -10, 19) ;
   Iconer_Options_Friends:SetScrollChild(friendsList);
 
   Iconer:createFriendsList(friendsList)
 
-
   Iconer_Options_Friends:SetClipsChildren(true);
+
+  -- Setup Auto-running options
+  Iconer_Options_Auto:SetScript("OnClick", function(self)
+    Iconer:setAutoGroup(self)
+  end)
+  Iconer_Options_Auto:SetChecked(auto.group)
+  
 
   -- Add the panel to the Interface Options
   InterfaceOptions_AddCategory(Iconer_Options);
@@ -167,6 +207,10 @@ function Iconer:createFriendsList(friendsList)
       end
     end)
   end
+end
+
+function Iconer:setAutoGroup(button)
+  auto.group = button:GetChecked()
 end
 
 Iconer:setup();
