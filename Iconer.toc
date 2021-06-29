@@ -1,8 +1,8 @@
-## Interface: 90005
+## Interface: 90100
 ## Title: Iconer
 ## Notes: Set certain raid icons on your Battle.net friends, no matter which character they're playing.
 ## Author: peterwooley
-## Version: 1.1.0
+## Version: 1.1.1
 ## LoadOnDemand: 0
 ## DefaultState: enabled
 ## SavedVariables: IconerDB
