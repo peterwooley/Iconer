@@ -1,4 +1,4 @@
-## Interface: 90205
+## Interface: 90207
 ## Title: Iconer
 ## Notes: Set certain raid icons on your Battle.net friends, no matter which character they're playing.
 ## Author: peterwooley
