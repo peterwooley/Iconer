@@ -45,7 +45,7 @@
 				</Anchors>
 			</ScrollFrame>
 
-      <CheckButton name="$parent_Auto" inherits="OptionsCheckButtonTemplate" checked="true">
+      <CheckButton name="$parent_Auto" inherits="UICheckButtonTemplate" checked="true">
 				<Anchors>
 					<Anchor point="TOPLEFT" relativeTo="$parent_FriendsBackdrop" relativePoint="TOPRIGHT" x="16" y="0"/>
         </Anchors>
