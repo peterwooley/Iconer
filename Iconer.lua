@@ -138,16 +138,25 @@ end
 function Iconer:createFriendsList(friendsList)
   local friends, nf, friend = {}, {};
 
+  
   -- Add self
-  friends[1] = C_BattleNet.GetAccountInfoByID(select(3, BNGetInfo()));
+  local wowAccountGUID = select(3, BNGetInfo())
+  if(wowAccountGUID == nil) then
+    -- When the user isn't logged into Battle.net, this will stop loading Iconer before errors are thrown
+    return
+  end
+  friends[1] = C_BattleNet.GetAccountInfoByID(wowAccountGUID);
   
   -- Add favorites and store non-favorites
   for i=1, BNGetNumFriends() do
     friend=C_BattleNet.GetFriendAccountInfo(i);
-    if friend.isFavorite then
-      friends[#friends+1] = friend;
-    else
-      nf[#nf+1] = friend;
+
+    if friend then
+      if friend.isFavorite then
+        friends[#friends+1] = friend;
+      else
+        nf[#nf+1] = friend;
+      end
     end
   end
 
