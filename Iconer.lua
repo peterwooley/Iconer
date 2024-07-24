@@ -68,8 +68,7 @@ function IconerCommand(msg, editbox)
   local clear = msg == "clear";
 
   if msg=="options" then
-    InterfaceOptionsFrame_OpenToCategory(Iconer_Options);
-    InterfaceOptionsFrame_OpenToCategory(Iconer_Options);
+    Settings.OpenToCategory(Iconer_Options.categoryId);
     return
   end
 
@@ -132,7 +131,9 @@ function Iconer:registerOptions()
   
 
   -- Add the panel to the Interface Options
-  InterfaceOptions_AddCategory(Iconer_Options);
+  local category, layout = Settings.RegisterCanvasLayoutCategory(Iconer_Options, "Iconer");
+  Iconer_Options.categoryId = category:GetID();
+  Settings.RegisterAddOnCategory(category);
 end
 
 function Iconer:createFriendsList(friendsList)
