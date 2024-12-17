@@ -1,4 +1,4 @@
-## Interface: 110005
+## Interface: 110007
 ## Title: Iconer
 ## Notes: Set certain raid icons on your Battle.net friends, no matter which character they're playing.
 ## IconTexture: Interface\AddOns\Iconer\icon.png
