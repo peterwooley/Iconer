@@ -3,7 +3,7 @@
 ## Notes: Set certain raid icons on your Battle.net friends, no matter which character they're playing.
 ## IconTexture: Interface\AddOns\Iconer\icon.png
 ## Author: peterwooley
-## Version: 1.1.20
+## Version: 1.1.21
 ## LoadOnDemand: 0
 ## DefaultState: enabled
 ## SavedVariables: IconerDB
