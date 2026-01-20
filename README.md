@@ -1,4 +1,4 @@
-# Iconer Add-On [![Build Status](https://travis-ci.com/peterwooley/Iconer.svg?branch=main)](https://app.travis-ci.com/github/peterwooley/Iconer)
+# Iconer Add-On
 
 ## Retired
 **Due to restrictions Blizzard has added on setting raid targets programmatically in World of Warcraft Midnight, Iconer can no longer function in a way that's more useful than just setting icons manually, so it is no longer being developed.**
